@@ -1,18 +1,12 @@
 class Solution(object):
     def nextGreaterElements(self, nums):
         n = len(nums)
-        ans = []
-
-        for i in range(n):
-            greater = -1
-
-            for j in range(1, n):
-                index = (i + j) % n
-
-                if nums[index] > nums[i]:
-                    greater = nums[index]
-                    break
-
-            ans.append(greater)
-
-        return ans
+        st = []
+        
+        a=[-1]*n
+        for i in range(2*n):
+            while st and nums[st[-1]]<nums[i%n]:
+                a[st.pop()]=nums[i%n]
+            st.append(i%n)
+        
+        return a
