@@ -25,10 +25,11 @@ class Solution(object):
             else:
                 right[i]=stack[-1]
             stack.append(i)
-        area=0
         maxi=0
         for i in range(n):
-            area=(right[i]-left[i]-1)*heights[i]
+            w=right[i]-left[i]-1
+            area=w*heights[i]
             maxi=max(maxi,area)
         return maxi
         
+
