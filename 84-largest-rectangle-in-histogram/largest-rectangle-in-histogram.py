@@ -4,12 +4,12 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
-        n=len(heights)
         stack=[]
+        n=len(heights)
         left=[-1]*n
         right=[n]*n
-        for i in range(len(heights)):
-            while stack and heights[i]<=heights[stack[-1]]:
+        for i in range(n):
+            while stack and heights[stack[-1]]>=heights[i]:
                 stack.pop()
             if not stack:
                 left[i]=-1
@@ -17,18 +17,18 @@ class Solution(object):
                 left[i]=stack[-1]
             stack.append(i)
         stack=[]
-        for i in range(len(heights)-1,-1,-1):
-            while stack and heights[i]<=heights[stack[-1]]:
+        for i in range(n-1,-1,-1):
+            while stack and heights[stack[-1]]>=heights[i]:
                 stack.pop()
             if not stack:
                 right[i]=n
             else:
                 right[i]=stack[-1]
             stack.append(i)
-        Marea=0
+        area=0
+        maxi=0
         for i in range(n):
-            w=right[i]-left[i]-1
-            area=w*heights[i]
-            Marea=max(Marea,area)
-        return Marea
+            area=(right[i]-left[i]-1)*heights[i]
+            maxi=max(maxi,area)
+        return maxi
         
