@@ -1,36 +1,42 @@
 class Solution(object):
     def calculate(self, s):
-        stack = []
-        num = 0
-        sign = '+'
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack=[]
+        sign=[]
+        num=0
+        def precedence(op):
+            if op == '+' or op == '-':
+                return 1
+            return 2
+        def calculate():
+            b = stack.pop()
+            a =stack.pop()
+            op = sign.pop()
 
+            if op == '+':
+                stack.append(a+b)
+            elif op == '-':
+                stack.append(a-b)
+            elif op == '*':
+                stack.append(a*b)
+            else:
+                stack.append(int(a/b))
         for i in range(len(s)):
-            ch = s[i]
-
-            if ch.isdigit():
-                num = num * 10 + int(ch)
-
-            if (not ch.isdigit() and ch != ' ') or i == len(s) - 1:
-
-                if sign == '+':
-                    stack.append(num)
-
-                elif sign == '-':
-                    stack.append(-num)
-
-                elif sign == '*':
-                    stack.append(stack.pop() * num)
-
-                elif sign == '/':
-                    prev = stack.pop()
-
-                    # Truncate toward zero (Python 2 compatible)
-                    if prev < 0:
-                        stack.append(-((-prev) // num))
-                    else:
-                        stack.append(prev // num)
-
-                sign = ch
-                num = 0
-
-        return sum(stack)
+            if s[i].isdigit():
+                num=num*10+int(s[i])
+            elif s[i]==" ":
+                continue
+            else:
+                stack.append(num)
+                num=0
+                curr=s[i]
+                while sign and precedence(sign[-1])>=precedence(curr):
+                    calculate()
+                sign.append(curr)
+        stack.append(num)
+        while sign:
+            calculate()
+        return stack[-1]
