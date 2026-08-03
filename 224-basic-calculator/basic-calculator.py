@@ -4,37 +4,39 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        stack = []
-        result = 0
-        num = 0
-        sign = 1
-
-        for ch in s:
-            if ch.isdigit():
-                num = num * 10 + int(ch)
-
-            elif ch == '+':
-                result += sign * num
-                num = 0
-                sign = 1
-
-            elif ch == '-':
-                result += sign * num
-                num = 0
-                sign = -1
-
-            elif ch == '(':
-                stack.append(result)
-                stack.append(sign)
-
-                result = 0
-                sign = 1
-
-            elif ch == ')':
-                result += sign * num
-                num = 0
-
-                result *= stack.pop()      # sign before '('
-                result += stack.pop()      # result before '('
-
-        return result + sign * num
+        i=0
+        sign=+1
+        result=0
+        stack=[]
+        num=''
+        while i<len(s):
+            if s[i].isdigit():
+                num=''
+                while i<len(s) and s[i].isdigit():
+                    num=num+s[i]
+                    i+=1
+                result=result+sign*int(num)
+                
+            elif s[i]=='-':
+                sign=-1
+                i+=1
+            elif s[i]=='+':
+                sign=+1
+                i+=1
+            elif s[i]=='(':
+                a=(result,sign)
+                stack.append(a)
+                result=0
+                sign=+1
+                i+=1
+            elif s[i]==')':
+                u=stack.pop()
+                m=u[0]
+                n=u[1]
+                result=result*n+m
+                i+=1
+            else:
+                i+=1
+                continue
+        return result
+                
