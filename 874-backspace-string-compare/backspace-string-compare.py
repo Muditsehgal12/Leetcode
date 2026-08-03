@@ -5,10 +5,6 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        stack1=[]
-        stack2=[]
-        m=''
-        r=''
         def check(arr):
             stack1=[]
             r=''
