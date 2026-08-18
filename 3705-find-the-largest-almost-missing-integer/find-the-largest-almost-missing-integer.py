@@ -5,18 +5,22 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        st=[]
-        f={}
-        for l in range(len(nums)-k+1):
-                st=nums[l:l+k]
-                for i in set(st):
-                    f[i]=f.get(i,0)+1
-                
-        
-        m=-1
-        for i in f:
-            if f[i]==1:
-                m=max(m,i)
-        return m
-
-
+        freq = {}
+        c=-1
+        for x in nums:
+            freq[x] = freq.get(x, 0) + 1
+        if k==len(nums):
+            return max(nums)
+        elif k==1:
+            for i in freq:
+                if freq[i]==1:
+                    c=max(c,i)
+            return c
+        else:
+            
+            candidates = []
+            if freq[nums[0]] == 1:
+                candidates.append(nums[0])
+            if freq[nums[-1]] == 1:
+                candidates.append(nums[-1])
+            return max(candidates) if candidates else -1
