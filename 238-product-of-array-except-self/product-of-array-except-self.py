@@ -4,16 +4,28 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        ans = [1] * len(nums)
-
-        prefix = 1
+        
+        prefix=1
+        c=-1
+        count=0
         for i in range(len(nums)):
-            ans[i] = prefix
-            prefix *= nums[i]
+            if nums[i]!=0:
+                prefix*=nums[i]
+            else:
+                c=i
+                count+=1
+                continue
+        ans = [0] * len(nums)
+        if count>1:
+            return ans
+        elif count==1:
+            for i in range(len(nums)):
+                if i==c:
+                    ans[i]=prefix
+            return ans
+        else:
 
-        prefix = 1
-        for i in range(len(nums)-1, -1, -1):
-            ans[i] *= prefix
-            prefix *= nums[i]
-
-        return ans
+            ans = [1] * len(nums)
+            for i in range(len(nums)):
+                ans[i]=prefix/nums[i]
+            return ans
