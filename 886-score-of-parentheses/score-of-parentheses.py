@@ -1,19 +1,15 @@
 class Solution(object):
     def scoreOfParentheses(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        stack=[]
-        c=0
-        for i in s:
-            if i=='(':
-                stack.append(c)
-                c=0
-                
+        stack = [0]
+
+        for char in s:
+            if char == '(':
+                stack.append(0)
             else:
-                p=stack.pop()
-                c=p+max(2*c,1)
-                
-            
-        return c        
+                value = stack.pop()
+                if value == 0:
+                    value = 1
+                else:
+                    value = 2 * value
+                stack[-1] += value
+        return stack[0]
