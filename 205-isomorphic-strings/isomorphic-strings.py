@@ -1,24 +1,22 @@
 class Solution(object):
     def isIsomorphic(self, s, t):
-        """
-        :type s: str
-        :type t: str
-        :rtype: bool
-        """
-        if len(s)!=len(t):
-            return False
-        f={}
+        s_to_t = {}
+        t_to_s = {}
+
         for i in range(len(s)):
-            if s[i] in f:
-                if f[s[i]]!=t[i]:
+            c1 = s[i]
+            c2 = t[i]
+
+            if c1 in s_to_t:
+                if s_to_t[c1] != c2:
                     return False
             else:
-                if t[i] in f.values():
+                s_to_t[c1] = c2
+
+            if c2 in t_to_s:
+                if t_to_s[c2] != c1:
                     return False
-                f[s[i]]=t[i]
-        res=""
-        for i in s:
-            res+=f[i]
-        if res==t:
-            return True
-        return False
+            else:
+                t_to_s[c2] = c1
+
+        return True
