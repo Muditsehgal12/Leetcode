@@ -4,8 +4,4 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        s=0
-        a=max(nums)
-        for i in nums:
-            s+=a-i
-        return s
+        return len(nums)*max(nums)-sum(nums)
